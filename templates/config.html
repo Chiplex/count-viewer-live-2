@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración - Contador de Visualizaciones</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="config-body">
+    <div class="container config-container">
+        <h1>Configuración del Contador</h1>
+        
+        <form id="config-form">
+            <div class="display-settings">
+                <h2>Configuración de Visualización</h2>
+                
+                <div class="form-group">
+                    <label for="background-color">Color de fondo:</label>
+                    <input type="color" id="background-color" value="{{ config['display']['background_color'] }}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="font-size">Tamaño de fuente:</label>
+                    <input type="number" id="font-size" value="{{ config['display']['font_size'] }}" min="12" max="72">
+                </div>
+                
+                <div class="form-group">
+                    <label for="update-interval">Intervalo de actualización (segundos):</label>
+                    <input type="number" id="update-interval" value="{{ config['display']['update_interval'] }}" min="1" max="60">
+                </div>
+            </div>
+            
+            <div class="platforms-settings">
+                <h2>Plataformas</h2>
+                
+                <!-- YouTube -->
+                <div class="platform-config">
+                    <h3>
+                        <input type="checkbox" id="youtube-enabled" 
+                            {% if config['platforms']['youtube']['enabled'] %}checked{% endif %}>
+                        <label for="youtube-enabled">YouTube</label>
+                    </h3>
+                    
+                    <div class="platform-credentials" id="youtube-credentials">
+                        <div class="form-group">
+                            <label for="youtube-api-key">API Key:</label>
+                            <input type="text" id="youtube-api-key" 
+                                value="{{ config['platforms']['youtube']['credentials'].get('api_key', '') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="youtube-video-id">ID del video:</label>
+                            <input type="text" id="youtube-video-id" 
+                                value="{{ config['platforms']['youtube']['credentials'].get('video_id', '') }}">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Twitch -->
+                <div class="platform-config">
+                    <h3>
+                        <input type="checkbox" id="twitch-enabled" 
+                            {% if config['platforms']['twitch']['enabled'] %}checked{% endif %}>
+                        <label for="twitch-enabled">Twitch</label>
+                    </h3>
+                    
+                    <div class="platform-credentials" id="twitch-credentials">
+                        <div class="form-group">
+                            <label for="twitch-client-id">Client ID:</label>
+                            <input type="text" id="twitch-client-id" 
+                                value="{{ config['platforms']['twitch']['credentials'].get('client_id', '') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="twitch-client-secret">Client Secret:</label>
+                            <input type="text" id="twitch-client-secret" 
+                                value="{{ config['platforms']['twitch']['credentials'].get('client_secret', '') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="twitch-channel-name">Nombre del canal:</label>
+                            <input type="text" id="twitch-channel-name" 
+                                value="{{ config['platforms']['twitch']['credentials'].get('channel_name', '') }}">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Facebook -->
+                <div class="platform-config">
+                    <h3>
+                        <input type="checkbox" id="facebook-enabled" 
+                            {% if config['platforms']['facebook']['enabled'] %}checked{% endif %}>
+                        <label for="facebook-enabled">Facebook Live</label>
+                    </h3>
+                    
+                    <div class="platform-credentials" id="facebook-credentials">
+                        <div class="form-group">
+                            <label for="facebook-access-token">Access Token:</label>
+                            <input type="text" id="facebook-access-token" 
+                                value="{{ config['platforms']['facebook']['credentials'].get('access_token', '') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="facebook-live-video-id">ID del video en vivo:</label>
+                            <input type="text" id="facebook-live-video-id" 
+                                value="{{ config['platforms']['facebook']['credentials'].get('live_video_id', '') }}">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TikTok -->
+                <div class="platform-config">
+                    <h3>
+                        <input type="checkbox" id="tiktok-enabled" 
+                            {% if config['platforms']['tiktok']['enabled'] %}checked{% endif %}>
+                        <label for="tiktok-enabled">TikTok Live</label>
+                    </h3>
+                    
+                    <div class="platform-credentials" id="tiktok-credentials">
+                        <div class="form-group">
+                            <label for="tiktok-username">Nombre de usuario:</label>
+                            <input type="text" id="tiktok-username" 
+                                value="{{ config['platforms']['tiktok']['credentials'].get('username', '') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="tiktok-api-key">API Key:</label>
+                            <input type="text" id="tiktok-api-key" 
+                                value="{{ config['platforms']['tiktok']['credentials'].get('api_key', '') }}">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Zoom -->
+                <div class="platform-config">
+                    <h3>
+                        <input type="checkbox" id="zoom-enabled" 
+                            {% if config['platforms']['zoom']['enabled'] %}checked{% endif %}>
+                        <label for="zoom-enabled">Zoom</label>
+                    </h3>
+                    
+                    <div class="platform-credentials" id="zoom-credentials">
+                        <div class="form-group">
+                            <label for="zoom-api-key">API Key:</label>
+                            <input type="text" id="zoom-api-key" 
+                                value="{{ config['platforms']['zoom']['credentials'].get('api_key', '') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="zoom-api-secret">API Secret:</label>
+                            <input type="text" id="zoom-api-secret" 
+                                value="{{ config['platforms']['zoom']['credentials'].get('api_secret', '') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="zoom-meeting-id">ID de la reunión:</label>
+                            <input type="text" id="zoom-meeting-id" 
+                                value="{{ config['platforms']['zoom']['credentials'].get('meeting_id', '') }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" id="save-config">Guardar Configuración</button>
+                <a href="{{ url_for('index') }}" class="button">Volver al Contador</a>
+            </div>
+        </form>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/config.js') }}"></script>
+</body>
+</html>

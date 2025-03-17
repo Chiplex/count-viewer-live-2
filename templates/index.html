@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Visualizaciones en Vivo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            background-color: {{ config['display']['background_color'] }};
+            font-size: {{ config['display']['font_size'] }}px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contador de Visualizaciones</h1>
+        
+        <div class="counter-container">
+            {% for platform in config['platforms'] %}
+                {% if config['platforms'][platform]['enabled'] %}
+                <div class="platform-counter" id="{{ platform }}-counter">
+                    <img src="{{ url_for('static', filename='img/' + platform + '.png') }}" alt="{{ platform }} logo">
+                    <div class="counter-value">
+                        <span id="{{ platform }}-count">0</span>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+        <div class="total-counter">
+            <h2>Total de espectadores</h2>
+            <div class="counter-value">
+                <span id="total-count">0</span>
+            </div>
+        </div>
+        
+        <div class="config-link">
+            <a href="{{ url_for('config_page') }}">Configuración</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

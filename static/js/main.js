@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Conectar al servidor WebSocket
     const socket = io();
     
+    // Hacer socket disponible globalmente para otros scripts
+    window.socketIO = socket;
+    
     // Escuchar actualizaciones de conteo
     socket.on('update_counts', function(counts) {
         updateCounters(counts);

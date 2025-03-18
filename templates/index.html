@@ -4,44 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contador de Visualizaciones en Vivo</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Estilos personalizados -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
         body {
             background-color: {{ config['display']['background_color'] }};
             font-size: {{ config['display']['font_size'] }}px;
         }
+        /* Estilos para controles manuales */
+        .manual-controls-container {
+            font-size: 14px; /* Tamaño más pequeño que el contador principal */
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Contador de Visualizaciones</h1>
+    <div class="container py-5">
+        <h1 class="text-center display-4 mb-5">Contador de Visualizaciones</h1>
         
-        <div class="counter-container">
+        <div class="counter-container row row-cols-1 row-cols-md-3 g-4 justify-content-center">
             {% for platform in config['platforms'] %}
                 {% if config['platforms'][platform]['enabled'] %}
-                <div class="platform-counter" id="{{ platform }}-counter">
-                    <img src="{{ url_for('static', filename='img/' + platform + '.png') }}" alt="{{ platform }} logo">
-                    <div class="counter-value">
-                        <span id="{{ platform }}-count">0</span>
+                <div class="col">
+                    <div class="platform-counter card h-100 text-center shadow" id="{{ platform }}-counter">
+                        <div class="card-header bg-white text-white py-3">
+                            <img src="{{ url_for('static', filename='img/' + platform + '.png') }}" 
+                                alt="{{ platform }} logo" 
+                                class="figure-img"/>
+                        </div>
+                        <div class="card-body counter-value d-flex align-items-center justify-content-center">
+                            <span id="{{ platform }}-count" class="display-5 fw-bold">0</span>
+                        </div>
                     </div>
                 </div>
                 {% endif %}
             {% endfor %}
         </div>
         
-        <div class="total-counter">
-            <h2>Total de espectadores</h2>
-            <div class="counter-value">
-                <span id="total-count">0</span>
+        <div class="total-counter mt-5 text-center">
+            <h2 class="h3 mb-3">Total de espectadores</h2>
+            <div class="counter-value card mx-auto shadow" style="max-width: 300px;">
+                <div class="card-body bg-primary text-white p-3">
+                    <span id="total-count" class="display-4 fw-bold">0</span>
+                </div>
             </div>
         </div>
         
-        <div class="config-link">
-            <a href="{{ url_for('config_page') }}">Configuración</a>
+        <div class="config-link text-center mt-4">
+            <a href="{{ url_for('config_page') }}" class="btn btn-outline-dark">
+                <i class="bi bi-gear-fill me-1"></i> Configuración
+            </a>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

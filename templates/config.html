@@ -1,166 +1,365 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configuración - Contador de Visualizaciones</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Estilos personalizados -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body class="config-body">
-    <div class="container config-container">
-        <h1>Configuración del Contador</h1>
-        
+
+<body class="bg-light">
+    <div class="container py-4">
+        <h1 class="display-4 mb-4 text-primary">Configuración - Contador de Visualizaciones</h1>
         <form id="config-form">
-            <div class="display-settings">
-                <h2>Configuración de Visualización</h2>
-                
-                <div class="form-group">
-                    <label for="background-color">Color de fondo:</label>
-                    <input type="color" id="background-color" value="{{ config['display']['background_color'] }}">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 my-1">Configuración de Visualización</h2>
                 </div>
-                
-                <div class="form-group">
-                    <label for="font-size">Tamaño de fuente:</label>
-                    <input type="number" id="font-size" value="{{ config['display']['font_size'] }}" min="12" max="72">
-                </div>
-                
-                <div class="form-group">
-                    <label for="update-interval">Intervalo de actualización (segundos):</label>
-                    <input type="number" id="update-interval" value="{{ config['display']['update_interval'] }}" min="1" max="60">
+                <div class="card-body">
+                    <div class="form-group mb-3">
+                        <label for="background-color" class="form-label">Color de fondo:</label>
+                        <input type="color" id="background-color" class="form-control form-control-color"
+                            value="{{ config['display']['background_color'] }}">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="font-size" class="form-label">Tamaño de fuente:</label>
+                        <input type="number" id="font-size" class="form-control"
+                            value="{{ config['display']['font_size'] }}" min="12" max="72">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="update-interval" class="form-label">Intervalo de actualización (segundos):</label>
+                        <input type="number" id="update-interval" class="form-control"
+                            value="{{ config['display']['update_interval'] }}" min="1" max="60">
+                    </div>
                 </div>
             </div>
-            
+
             <div class="platforms-settings">
-                <h2>Plataformas</h2>
-                
-                <!-- YouTube -->
-                <div class="platform-config">
-                    <h3>
-                        <input type="checkbox" id="youtube-enabled" 
-                            {% if config['platforms']['youtube']['enabled'] %}checked{% endif %}>
-                        <label for="youtube-enabled">YouTube</label>
-                    </h3>
-                    
-                    <div class="platform-credentials" id="youtube-credentials">
-                        <div class="form-group">
-                            <label for="youtube-api-key">API Key:</label>
-                            <input type="text" id="youtube-api-key" 
-                                value="{{ config['platforms']['youtube']['credentials'].get('api_key', '') }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="youtube-video-id">ID del video:</label>
-                            <input type="text" id="youtube-video-id" 
-                                value="{{ config['platforms']['youtube']['credentials'].get('video_id', '') }}">
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Twitch -->
-                <div class="platform-config">
-                    <h3>
-                        <input type="checkbox" id="twitch-enabled" 
-                            {% if config['platforms']['twitch']['enabled'] %}checked{% endif %}>
-                        <label for="twitch-enabled">Twitch</label>
-                    </h3>
-                    
-                    <div class="platform-credentials" id="twitch-credentials">
-                        <div class="form-group">
-                            <label for="twitch-client-id">Client ID:</label>
-                            <input type="text" id="twitch-client-id" 
-                                value="{{ config['platforms']['twitch']['credentials'].get('client_id', '') }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="twitch-client-secret">Client Secret:</label>
-                            <input type="text" id="twitch-client-secret" 
-                                value="{{ config['platforms']['twitch']['credentials'].get('client_secret', '') }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="twitch-channel-name">Nombre del canal:</label>
-                            <input type="text" id="twitch-channel-name" 
-                                value="{{ config['platforms']['twitch']['credentials'].get('channel_name', '') }}">
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Facebook -->
-                <div class="platform-config">
-                    <h3>
-                        <input type="checkbox" id="facebook-enabled" 
-                            {% if config['platforms']['facebook']['enabled'] %}checked{% endif %}>
-                        <label for="facebook-enabled">Facebook Live</label>
-                    </h3>
-                    
-                    <div class="platform-credentials" id="facebook-credentials">
-                        <div class="form-group">
-                            <label for="facebook-access-token">Access Token:</label>
-                            <input type="text" id="facebook-access-token" 
-                                value="{{ config['platforms']['facebook']['credentials'].get('access_token', '') }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="facebook-live-video-id">ID del video en vivo:</label>
-                            <input type="text" id="facebook-live-video-id" 
-                                value="{{ config['platforms']['facebook']['credentials'].get('live_video_id', '') }}">
+                <h2 class="h3 mb-3">Configuración de Plataformas</h2>
+
+                <div class="row">
+                    <!-- YouTube -->
+                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="platform-config card h-100 shadow-sm">
+                            <div class="card-header">
+                                <h3 class="h5 mb-0">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="youtube-enabled" {% if
+                                            config['platforms']['youtube']['enabled'] %}checked{% endif %}>
+                                        <label class="form-check-label" for="youtube-enabled">YouTube</label>
+                                    </div>
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="mode-selector bg-light p-2 rounded mb-3" id="youtube-mode-selector" {% if
+                                    not config['platforms']['youtube']['enabled'] %}style="display:none" {% endif %}>
+                                    <label class="d-block mb-2">Modo de conteo:</label>
+                                    <div class="btn-group" role="group">
+                                        <input type="radio" class="btn-check mode-radio" name="youtube-mode"
+                                            id="youtube-mode-api" value="api" {% if
+                                            config['platforms']['youtube'].get('mode', 'api' )=='api' %}checked{% endif
+                                            %}>
+                                        <label class="btn btn-outline-primary" for="youtube-mode-api">API</label>
+
+                                        <input type="radio" class="btn-check mode-radio" name="youtube-mode"
+                                            id="youtube-mode-manual" value="manual" {% if
+                                            config['platforms']['youtube'].get('mode')=='manual' %}checked{% endif %}>
+                                        <label class="btn btn-outline-primary" for="youtube-mode-manual">Manual</label>
+                                    </div>
+                                </div>
+
+                                <div class="platform-credentials" id="youtube-credentials" {% if
+                                    config['platforms']['youtube'].get('mode')=='manual' %}style="display:none" {% endif
+                                    %}>
+                                    <div class="form-group mb-3">
+                                        <label for="youtube-api-key" class="form-label">API Key:</label>
+                                        <input type="text" id="youtube-api-key" class="form-control"
+                                            value="{{ config['platforms']['youtube']['credentials'].get('api_key', '') }}">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="youtube-video-id" class="form-label">ID del video:</label>
+                                        <input type="text" id="youtube-video-id" class="form-control"
+                                            value="{{ config['platforms']['youtube']['credentials'].get('video_id', '') }}">
+                                    </div>
+                                </div>
+
+                                <div class="manual-controls input-group" id="youtube-manual-controls" {% if not
+                                    config['platforms']['youtube'].get('mode')=='manual' %}style="display:none" {% endif
+                                    %}>
+                                    <label for="youtube-manual-count" class="input-group-text">Contador manual:</label>
+                                    <button type="button" class="btn btn-outline-secondary decrement-count">-</button>
+                                    <input type="number" id="youtube-manual-count" min="0"
+                                        class="form-control text-center"
+                                        value="{{ config['platforms']['youtube'].get('manual_count', 0) }}">
+                                    <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- TikTok -->
-                <div class="platform-config">
-                    <h3>
-                        <input type="checkbox" id="tiktok-enabled" 
-                            {% if config['platforms']['tiktok']['enabled'] %}checked{% endif %}>
-                        <label for="tiktok-enabled">TikTok Live</label>
-                    </h3>
-                    
-                    <div class="platform-credentials" id="tiktok-credentials">
-                        <div class="form-group">
-                            <label for="tiktok-username">Nombre de usuario:</label>
-                            <input type="text" id="tiktok-username" 
-                                value="{{ config['platforms']['tiktok']['credentials'].get('username', '') }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="tiktok-api-key">API Key:</label>
-                            <input type="text" id="tiktok-api-key" 
-                                value="{{ config['platforms']['tiktok']['credentials'].get('api_key', '') }}">
+
+                    <!-- Twitch -->
+                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="platform-config card h-100 shadow-sm">
+                            <div class="card-header">
+                                <h3 class="h5 mb-0">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="twitch-enabled" {% if
+                                            config['platforms']['twitch']['enabled'] %}checked{% endif %}>
+                                        <label class="form-check-label" for="twitch-enabled">Twitch</label>
+                                    </div>
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="mode-selector-twitch bg-light p-2 rounded mb-3" id="twitch-mode-selector" {%
+                                    if not config['platforms']['twitch']['enabled'] %}style="display:none" {% endif %}>
+                                    <label class="d-block mb-2">Modo de conteo:</label>
+                                    <div class="btn-group" role="group">
+                                        <input type="radio" class="btn-check mode-radio" name="twitch-mode"
+                                            id="twitch-mode-api" value="api" {% if
+                                            config['platforms']['twitch'].get('mode', 'api' )=='api' %}checked{% endif
+                                            %}>
+                                        <label class="btn btn-outline-primary" for="twitch-mode-api">API</label>
+
+                                        <input type="radio" class="btn-check mode-radio" name="twitch-mode"
+                                            id="twitch-mode-manual" value="manual" {% if
+                                            config['platforms']['twitch'].get('mode')=='manual' %}checked{% endif %}>
+                                        <label class="btn btn-outline-primary" for="twitch-mode-manual">Manual</label>
+                                    </div>
+                                </div>
+
+                                <div class="platform-credentials" id="twitch-credentials" {% if
+                                    config['platforms']['twitch'].get('mode')=='manual' %}style="display:none" {% endif
+                                    %}>
+                                    <div class="form-group mb-3">
+                                        <label for="twitch-client-id" class="form-label">Client ID:</label>
+                                        <input type="text" id="twitch-client-id" class="form-control"
+                                            value="{{ config['platforms']['twitch']['credentials'].get('client_id', '') }}">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="twitch-client-secret" class="form-label">Client Secret:</label>
+                                        <input type="text" id="twitch-client-secret" class="form-control"
+                                            value="{{ config['platforms']['twitch']['credentials'].get('client_secret', '') }}">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="twitch-channel-name" class="form-label">Nombre del canal:</label>
+                                        <input type="text" id="twitch-channel-name" class="form-control"
+                                            value="{{ config['platforms']['twitch']['credentials'].get('channel_name', '') }}">
+                                    </div>
+                                </div>
+
+                                <div class="manual-controls input-group" id="twitch-manual-controls" {% if not
+                                    config['platforms']['twitch'].get('mode')=='manual' %}style="display:none" {% endif
+                                    %}>
+                                    <label for="twitch-manual-count" class="input-group-text">Contador manual:</label>
+                                    <button type="button" class="btn btn-outline-secondary decrement-count">-</button>
+                                    <input type="number" id="twitch-manual-count" min="0"
+                                        class="form-control text-center"
+                                        value="{{ config['platforms']['twitch'].get('manual_count', 0) }}">
+                                    <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Zoom -->
-                <div class="platform-config">
-                    <h3>
-                        <input type="checkbox" id="zoom-enabled" 
-                            {% if config['platforms']['zoom']['enabled'] %}checked{% endif %}>
-                        <label for="zoom-enabled">Zoom</label>
-                    </h3>
-                    
-                    <div class="platform-credentials" id="zoom-credentials">
-                        <div class="form-group">
-                            <label for="zoom-api-key">API Key:</label>
-                            <input type="text" id="zoom-api-key" 
-                                value="{{ config['platforms']['zoom']['credentials'].get('api_key', '') }}">
+
+                    <!-- Facebook -->
+                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="platform-config card h-100 shadow-sm">
+                            <div class="card-header">
+                                <h3 class="h5 mb-0">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="facebook-enabled" {% if
+                                            config['platforms']['facebook']['enabled'] %}checked{% endif %}>
+                                        <label class="form-check-label" for="facebook-enabled">Facebook Live</label>
+                                    </div>
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="mode-selector bg-light p-2 rounded mb-3" id="facebook-mode-selector" {% if
+                                    not config['platforms']['facebook']['enabled'] %}style="display:none" {% endif %}>
+                                    <label class="d-block mb-2">Modo de conteo:</label>
+                                    <div class="btn-group" role="group">
+                                        <input type="radio" class="btn-check mode-radio" name="facebook-mode"
+                                            id="facebook-mode-api" value="api" {% if
+                                            config['platforms']['facebook'].get('mode', 'api' )=='api' %}checked{% endif
+                                            %}>
+                                        <label class="btn btn-outline-primary" for="facebook-mode-api">API</label>
+
+                                        <input type="radio" class="btn-check mode-radio" name="facebook-mode"
+                                            id="facebook-mode-manual" value="manual" {% if
+                                            config['platforms']['facebook'].get('mode')=='manual' %}checked{% endif %}>
+                                        <label class="btn btn-outline-primary" for="facebook-mode-manual">Manual</label>
+                                    </div>
+                                </div>
+
+                                <div class="platform-credentials" id="facebook-credentials" {% if
+                                    config['platforms']['facebook'].get('mode')=='manual' %}style="display:none" {%
+                                    endif %}>
+                                    <div class="form-group mb-3">
+                                        <label for="facebook-access-token" class="form-label">Access Token:</label>
+                                        <input type="text" id="facebook-access-token" class="form-control"
+                                            value="{{ config['platforms']['facebook']['credentials'].get('access_token', '') }}">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="facebook-live-video-id" class="form-label">ID del video en
+                                            vivo:</label>
+                                        <input type="text" id="facebook-live-video-id" class="form-control"
+                                            value="{{ config['platforms']['facebook']['credentials'].get('live_video_id', '') }}">
+                                    </div>
+                                </div>
+
+                                <div class="manual-controls input-group" id="facebook-manual-controls" {% if not
+                                    config['platforms']['facebook'].get('mode')=='manual' %}style="display:none" {%
+                                    endif %}>
+                                    <label for="facebook-manual-count" class="input-group-text">Contador manual:</label>
+                                    <button type="button" class="btn btn-outline-secondary decrement-count">-</button>
+                                    <input type="number" id="facebook-manual-count" min="0"
+                                        class="form-control text-center"
+                                        value="{{ config['platforms']['facebook'].get('manual_count', 0) }}">
+                                    <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="zoom-api-secret">API Secret:</label>
-                            <input type="text" id="zoom-api-secret" 
-                                value="{{ config['platforms']['zoom']['credentials'].get('api_secret', '') }}">
+                    </div>
+
+                    <!-- TikTok -->
+                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="platform-config card h-100 shadow-sm">
+                            <div class="card-header">
+                                <h3 class="h5 mb-0">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="tiktok-enabled" {% if
+                                            config['platforms']['tiktok']['enabled'] %}checked{% endif %}>
+                                        <label class="form-check-label" for="tiktok-enabled">TikTok Live</label>
+                                    </div>
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="mode-selector bg-light p-2 rounded mb-3" id="tiktok-mode-selector" {% if not
+                                    config['platforms']['tiktok']['enabled'] %}style="display:none" {% endif %}>
+                                    <label class="d-block mb-2">Modo de conteo:</label>
+                                    <div class="btn-group" role="group">
+                                        <input type="radio" class="btn-check mode-radio" name="tiktok-mode"
+                                            id="tiktok-mode-api" value="api" {% if
+                                            config['platforms']['tiktok'].get('mode', 'api' )=='api' %}checked{% endif
+                                            %}>
+                                        <label class="btn btn-outline-primary" for="tiktok-mode-api">API</label>
+
+                                        <input type="radio" class="btn-check mode-radio" name="tiktok-mode"
+                                            id="tiktok-mode-manual" value="manual" {% if
+                                            config['platforms']['tiktok'].get('mode')=='manual' %}checked{% endif %}>
+                                        <label class="btn btn-outline-primary" for="tiktok-mode-manual">Manual</label>
+                                    </div>
+                                </div>
+
+                                <div class="platform-credentials" id="tiktok-credentials" {% if
+                                    config['platforms']['tiktok'].get('mode')=='manual' %}style="display:none" {% endif
+                                    %}>
+                                    <div class="form-group mb-3">
+                                        <label for="tiktok-username" class="form-label">Nombre de usuario:</label>
+                                        <input type="text" id="tiktok-username" class="form-control"
+                                            value="{{ config['platforms']['tiktok']['credentials'].get('username', '') }}">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="tiktok-api-key" class="form-label">API Key:</label>
+                                        <input type="text" id="tiktok-api-key" class="form-control"
+                                            value="{{ config['platforms']['tiktok']['credentials'].get('api_key', '') }}">
+                                    </div>
+                                </div>
+
+                                <div class="manual-controls input-group" id="tiktok-manual-controls" {% if not
+                                    config['platforms']['tiktok'].get('mode')=='manual' %}style="display:none" {% endif
+                                    %}>
+                                    <label for="tiktok-manual-count" class="input-group-text">Contador manual:</label>
+                                    <button type="button" class="btn btn-outline-secondary decrement-count">-</button>
+                                    <input type="number" id="tiktok-manual-count" min="0"
+                                        class="form-control text-center"
+                                        value="{{ config['platforms']['tiktok'].get('manual_count', 0) }}">
+                                    <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="zoom-meeting-id">ID de la reunión:</label>
-                            <input type="text" id="zoom-meeting-id" 
-                                value="{{ config['platforms']['zoom']['credentials'].get('meeting_id', '') }}">
+                    </div>
+
+                    <!-- Zoom -->
+                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="platform-config card h-100 shadow-sm">
+                            <div class="card-header">
+                                <h3 class="h5 mb-0">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="zoom-enabled" {% if
+                                            config['platforms']['zoom']['enabled'] %}checked{% endif %}>
+                                        <label class="form-check-label" for="zoom-enabled">Zoom</label>
+                                    </div>
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="mode-selector bg-light p-2 rounded mb-3" id="zoom-mode-selector" {% if not
+                                    config['platforms']['zoom']['enabled'] %}style="display:none" {% endif %}>
+                                    <label class="d-block mb-2">Modo de conteo:</label>
+                                    <div class="btn-group" role="group">
+                                        <input type="radio" class="btn-check mode-radio" name="zoom-mode"
+                                            id="zoom-mode-api" value="api" {% if
+                                            config['platforms']['zoom'].get('mode', 'api' )=='api' %}checked{% endif %}>
+                                        <label class="btn btn-outline-primary" for="zoom-mode-api">API</label>
+
+                                        <input type="radio" class="btn-check mode-radio" name="zoom-mode"
+                                            id="zoom-mode-manual" value="manual" {% if
+                                            config['platforms']['zoom'].get('mode')=='manual' %}checked{% endif %}>
+                                        <label class="btn btn-outline-primary" for="zoom-mode-manual">Manual</label>
+                                    </div>
+                                </div>
+
+                                <div class="platform-credentials" id="zoom-credentials" {% if
+                                    config['platforms']['zoom'].get('mode')=='manual' %}style="display:none" {% endif
+                                    %}>
+                                    <div class="form-group mb-3">
+                                        <label for="zoom-api-key" class="form-label">API Key:</label>
+                                        <input type="text" id="zoom-api-key" class="form-control"
+                                            value="{{ config['platforms']['zoom']['credentials'].get('api_key', '') }}">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="zoom-api-secret" class="form-label">API Secret:</label>
+                                        <input type="text" id="zoom-api-secret" class="form-control"
+                                            value="{{ config['platforms']['zoom']['credentials'].get('api_secret', '') }}">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="zoom-meeting-id" class="form-label">ID de la reunión:</label>
+                                        <input type="text" id="zoom-meeting-id" class="form-control"
+                                            value="{{ config['platforms']['zoom']['credentials'].get('meeting_id', '') }}">
+                                    </div>
+                                </div>
+
+                                <div class="manual-controls input-group" id="zoom-manual-controls" {% if not
+                                    config['platforms']['zoom'].get('mode')=='manual' %}style="display:none" {% endif
+                                    %}></div>
+                                <label for="zoom-manual-count" class="input-group-text">Contador manual:</label>
+                                <button type="button" class="btn btn-outline-secondary decrement-count">-</button>
+                                <input type="number" id="zoom-manual-count" min="0" class="form-control text-center"
+                                    value="{{ config['platforms']['zoom'].get('manual_count', 0) }}">
+                                <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="form-actions">
-                <button type="submit" id="save-config">Guardar Configuración</button>
-                <a href="{{ url_for('index') }}" class="button">Volver al Contador</a>
+
+            <div class="form-actions mt-4">
+                <button type="submit" id="save-config" class="btn btn-primary btn-lg">Guardar Configuración</button>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary btn-lg ms-2">Volver al Contador</a>
             </div>
-        </form>
     </div>
-    
+    </form>
+    </div>
+
     <script src="{{ url_for('static', filename='js/config.js') }}"></script>
+    <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

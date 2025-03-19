@@ -100,12 +100,6 @@ input[type="color"] {
     border-radius: 5px;
 }
 
-.platform-credentials {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
-}
-
 button, .button {
     background-color: #4CAF50;
     color: white;

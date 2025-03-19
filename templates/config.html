@@ -46,37 +46,35 @@
                 <div class="row">
                     <!-- YouTube -->
                     <div class="col-12 col-md-6 col-lg-4 mb-3">
-                        <div class="platform-config card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm">
                             <div class="card-header">
                                 <h3 class="h5 mb-0">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="youtube-enabled" {% if
-                                            config['platforms']['youtube']['enabled'] %}checked{% endif %}>
+                                        <input class="form-check-input" type="checkbox" id="youtube-enabled"
+                                            {% if config['platforms']['youtube']['enabled'] %}checked{% endif %}>
                                         <label class="form-check-label" for="youtube-enabled">YouTube</label>
                                     </div>
                                 </h3>
                             </div>
                             <div class="card-body">
-                                <div class="mode-selector bg-light p-2 rounded mb-3" id="youtube-mode-selector" {% if
-                                    not config['platforms']['youtube']['enabled'] %}style="display:none" {% endif %}>
+                                <div class="mode-selector bg-light p-2 rounded mb-3" id="youtube-mode-selector" 
+                                    {% if not config['platforms']['youtube']['enabled'] %} style="display:none" {% endif %}>
                                     <label class="d-block mb-2">Modo de conteo:</label>
                                     <div class="btn-group" role="group">
                                         <input type="radio" class="btn-check mode-radio" name="youtube-mode"
-                                            id="youtube-mode-api" value="api" {% if
-                                            config['platforms']['youtube'].get('mode', 'api' )=='api' %}checked{% endif
-                                            %}>
+                                            id="youtube-mode-api" value="api" 
+                                            {% if config['platforms']['youtube'].get('mode', 'api' )=='api' %}checked{% endif %}>
                                         <label class="btn btn-outline-primary" for="youtube-mode-api">API</label>
 
                                         <input type="radio" class="btn-check mode-radio" name="youtube-mode"
-                                            id="youtube-mode-manual" value="manual" {% if
-                                            config['platforms']['youtube'].get('mode')=='manual' %}checked{% endif %}>
+                                            id="youtube-mode-manual" value="manual"
+                                            {% if config['platforms']['youtube'].get('mode')=='manual' %}checked{% endif %}>
                                         <label class="btn btn-outline-primary" for="youtube-mode-manual">Manual</label>
                                     </div>
                                 </div>
 
-                                <div class="platform-credentials" id="youtube-credentials" {% if
-                                    config['platforms']['youtube'].get('mode')=='manual' %}style="display:none" {% endif
-                                    %}>
+                                <div id="youtube-credentials" 
+                                    {% if config['platforms']['youtube'].get('mode')=='manual' %} style="display:none" {% endif %}>
                                     <div class="form-group mb-3">
                                         <label for="youtube-api-key" class="form-label">API Key:</label>
                                         <input type="text" id="youtube-api-key" class="form-control"
@@ -89,15 +87,16 @@
                                     </div>
                                 </div>
 
-                                <div class="manual-controls input-group" id="youtube-manual-controls" {% if not
-                                    config['platforms']['youtube'].get('mode')=='manual' %}style="display:none" {% endif
-                                    %}>
-                                    <label for="youtube-manual-count" class="input-group-text">Contador manual:</label>
-                                    <button type="button" class="btn btn-outline-secondary decrement-count">-</button>
-                                    <input type="number" id="youtube-manual-count" min="0"
-                                        class="form-control text-center"
-                                        value="{{ config['platforms']['youtube'].get('manual_count', 0) }}">
-                                    <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                                <div class="manual-controls input-group" id="youtube-manual-controls" 
+                                    {% if not config['platforms']['youtube'].get('mode')=='manual' %}style="display:none" {% endif %}>
+                                    <label for="youtube-manual-count">Contador manual:</label>
+                                    <div class="input-group mb-3">
+                                        <button type="button" class="btn btn-outline-secondary decrement-count" style="margin-right: 0px;">-</button>
+                                        <input type="number" id="youtube-manual-count" min="0"
+                                            class="form-control text-center"
+                                            value="{{ config['platforms']['youtube'].get('manual_count', 0) }}">
+                                        <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +104,7 @@
 
                     <!-- Twitch -->
                     <div class="col-12 col-md-6 col-lg-4 mb-3">
-                        <div class="platform-config card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm">
                             <div class="card-header">
                                 <h3 class="h5 mb-0">
                                     <div class="form-check form-switch">
@@ -116,26 +115,24 @@
                                 </h3>
                             </div>
                             <div class="card-body">
-                                <div class="mode-selector-twitch bg-light p-2 rounded mb-3" id="twitch-mode-selector" {%
-                                    if not config['platforms']['twitch']['enabled'] %}style="display:none" {% endif %}>
+                                <div class="mode-selector-twitch bg-light p-2 rounded mb-3" id="twitch-mode-selector" 
+                                    {% if not config['platforms']['twitch']['enabled'] %}style="display:none" {% endif %}>
                                     <label class="d-block mb-2">Modo de conteo:</label>
                                     <div class="btn-group" role="group">
                                         <input type="radio" class="btn-check mode-radio" name="twitch-mode"
-                                            id="twitch-mode-api" value="api" {% if
-                                            config['platforms']['twitch'].get('mode', 'api' )=='api' %}checked{% endif
-                                            %}>
+                                            id="twitch-mode-api" value="api" 
+                                            {% if config['platforms']['twitch'].get('mode', 'api' )=='api' %}checked{% endif %}>
                                         <label class="btn btn-outline-primary" for="twitch-mode-api">API</label>
 
                                         <input type="radio" class="btn-check mode-radio" name="twitch-mode"
-                                            id="twitch-mode-manual" value="manual" {% if
-                                            config['platforms']['twitch'].get('mode')=='manual' %}checked{% endif %}>
+                                            id="twitch-mode-manual" value="manual" 
+                                            {% if config['platforms']['twitch'].get('mode')=='manual' %}checked{% endif %}>
                                         <label class="btn btn-outline-primary" for="twitch-mode-manual">Manual</label>
                                     </div>
                                 </div>
 
-                                <div class="platform-credentials" id="twitch-credentials" {% if
-                                    config['platforms']['twitch'].get('mode')=='manual' %}style="display:none" {% endif
-                                    %}>
+                                <div id="twitch-credentials" 
+                                    {% if config['platforms']['twitch'].get('mode')=='manual' %}style="display:none" {% endif %}>
                                     <div class="form-group mb-3">
                                         <label for="twitch-client-id" class="form-label">Client ID:</label>
                                         <input type="text" id="twitch-client-id" class="form-control"
@@ -153,15 +150,16 @@
                                     </div>
                                 </div>
 
-                                <div class="manual-controls input-group" id="twitch-manual-controls" {% if not
-                                    config['platforms']['twitch'].get('mode')=='manual' %}style="display:none" {% endif
-                                    %}>
-                                    <label for="twitch-manual-count" class="input-group-text">Contador manual:</label>
-                                    <button type="button" class="btn btn-outline-secondary decrement-count">-</button>
-                                    <input type="number" id="twitch-manual-count" min="0"
-                                        class="form-control text-center"
-                                        value="{{ config['platforms']['twitch'].get('manual_count', 0) }}">
-                                    <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                                <div class="manual-controls input-group" id="twitch-manual-controls" 
+                                    {% if not config['platforms']['twitch'].get('mode')=='manual' %}style="display:none" {% endif %}>
+                                    <label for="twitch-manual-count">Contador manual:</label>
+                                    <div class="input-group mb-3">
+                                        <button type="button" class="btn btn-outline-secondary decrement-count" style="margin-right: 0px;">-</button>
+                                        <input type="number" id="twitch-manual-count" min="0"
+                                            class="form-control text-center"
+                                            value="{{ config['platforms']['twitch'].get('manual_count', 0) }}">
+                                        <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +167,7 @@
 
                     <!-- Facebook -->
                     <div class="col-12 col-md-6 col-lg-4 mb-3">
-                        <div class="platform-config card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm">
                             <div class="card-header">
                                 <h3 class="h5 mb-0">
                                     <div class="form-check form-switch">
@@ -180,48 +178,46 @@
                                 </h3>
                             </div>
                             <div class="card-body">
-                                <div class="mode-selector bg-light p-2 rounded mb-3" id="facebook-mode-selector" {% if
-                                    not config['platforms']['facebook']['enabled'] %}style="display:none" {% endif %}>
+                                <div class="mode-selector bg-light p-2 rounded mb-3" id="facebook-mode-selector" 
+                                    {% if not config['platforms']['facebook']['enabled'] %}style="display:none" {% endif %}>
                                     <label class="d-block mb-2">Modo de conteo:</label>
                                     <div class="btn-group" role="group">
                                         <input type="radio" class="btn-check mode-radio" name="facebook-mode"
-                                            id="facebook-mode-api" value="api" {% if
-                                            config['platforms']['facebook'].get('mode', 'api' )=='api' %}checked{% endif
-                                            %}>
+                                            id="facebook-mode-api" value="api" 
+                                            {% if config['platforms']['facebook'].get('mode', 'api' )=='api' %}checked{% endif %}>
                                         <label class="btn btn-outline-primary" for="facebook-mode-api">API</label>
 
                                         <input type="radio" class="btn-check mode-radio" name="facebook-mode"
-                                            id="facebook-mode-manual" value="manual" {% if
-                                            config['platforms']['facebook'].get('mode')=='manual' %}checked{% endif %}>
+                                            id="facebook-mode-manual" value="manual" 
+                                            {% if config['platforms']['facebook'].get('mode')=='manual' %}checked{% endif %}>
                                         <label class="btn btn-outline-primary" for="facebook-mode-manual">Manual</label>
                                     </div>
                                 </div>
 
-                                <div class="platform-credentials" id="facebook-credentials" {% if
-                                    config['platforms']['facebook'].get('mode')=='manual' %}style="display:none" {%
-                                    endif %}>
+                                <div id="facebook-credentials" 
+                                    {% if config['platforms']['facebook'].get('mode')=='manual' %}style="display:none" {% endif %}>
                                     <div class="form-group mb-3">
                                         <label for="facebook-access-token" class="form-label">Access Token:</label>
                                         <input type="text" id="facebook-access-token" class="form-control"
                                             value="{{ config['platforms']['facebook']['credentials'].get('access_token', '') }}">
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label for="facebook-live-video-id" class="form-label">ID del video en
-                                            vivo:</label>
+                                        <label for="facebook-live-video-id" class="form-label">ID del video en vivo:</label>
                                         <input type="text" id="facebook-live-video-id" class="form-control"
                                             value="{{ config['platforms']['facebook']['credentials'].get('live_video_id', '') }}">
                                     </div>
                                 </div>
 
-                                <div class="manual-controls input-group" id="facebook-manual-controls" {% if not
-                                    config['platforms']['facebook'].get('mode')=='manual' %}style="display:none" {%
-                                    endif %}>
-                                    <label for="facebook-manual-count" class="input-group-text">Contador manual:</label>
-                                    <button type="button" class="btn btn-outline-secondary decrement-count">-</button>
-                                    <input type="number" id="facebook-manual-count" min="0"
-                                        class="form-control text-center"
-                                        value="{{ config['platforms']['facebook'].get('manual_count', 0) }}">
-                                    <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                                <div class="manual-controls input-group" id="facebook-manual-controls" 
+                                    {% if not config['platforms']['facebook'].get('mode')=='manual' %}style="display:none" {% endif %}>
+                                    <label for="facebook-manual-count">Contador manual:</label>
+                                    <div class="input-group mb-3">
+                                        <button type="button" class="btn btn-outline-secondary decrement-count" style="margin-right: 0px;">-</button>
+                                        <input type="number" id="facebook-manual-count" min="0"
+                                            class="form-control text-center"
+                                            value="{{ config['platforms']['facebook'].get('manual_count', 0) }}">
+                                        <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -229,37 +225,35 @@
 
                     <!-- TikTok -->
                     <div class="col-12 col-md-6 col-lg-4 mb-3">
-                        <div class="platform-config card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm">
                             <div class="card-header">
                                 <h3 class="h5 mb-0">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="tiktok-enabled" {% if
-                                            config['platforms']['tiktok']['enabled'] %}checked{% endif %}>
+                                        <input class="form-check-input" type="checkbox" id="tiktok-enabled"
+                                            {% if config['platforms']['tiktok']['enabled'] %}checked{% endif %}>
                                         <label class="form-check-label" for="tiktok-enabled">TikTok Live</label>
                                     </div>
                                 </h3>
                             </div>
                             <div class="card-body">
-                                <div class="mode-selector bg-light p-2 rounded mb-3" id="tiktok-mode-selector" {% if not
-                                    config['platforms']['tiktok']['enabled'] %}style="display:none" {% endif %}>
+                                <div class="mode-selector bg-light p-2 rounded mb-3" id="tiktok-mode-selector" 
+                                    {% if not config['platforms']['tiktok']['enabled'] %}style="display:none" {% endif %}>
                                     <label class="d-block mb-2">Modo de conteo:</label>
                                     <div class="btn-group" role="group">
                                         <input type="radio" class="btn-check mode-radio" name="tiktok-mode"
-                                            id="tiktok-mode-api" value="api" {% if
-                                            config['platforms']['tiktok'].get('mode', 'api' )=='api' %}checked{% endif
-                                            %}>
+                                            id="tiktok-mode-api" value="api" 
+                                            {% if config['platforms']['tiktok'].get('mode', 'api' )=='api' %}checked{% endif %}>
                                         <label class="btn btn-outline-primary" for="tiktok-mode-api">API</label>
 
                                         <input type="radio" class="btn-check mode-radio" name="tiktok-mode"
-                                            id="tiktok-mode-manual" value="manual" {% if
-                                            config['platforms']['tiktok'].get('mode')=='manual' %}checked{% endif %}>
+                                            id="tiktok-mode-manual" value="manual" 
+                                            {% if config['platforms']['tiktok'].get('mode')=='manual' %}checked{% endif %}>
                                         <label class="btn btn-outline-primary" for="tiktok-mode-manual">Manual</label>
                                     </div>
                                 </div>
 
-                                <div class="platform-credentials" id="tiktok-credentials" {% if
-                                    config['platforms']['tiktok'].get('mode')=='manual' %}style="display:none" {% endif
-                                    %}>
+                                <div id="tiktok-credentials" 
+                                    {% if config['platforms']['tiktok'].get('mode')=='manual' %}style="display:none" {% endif%}>
                                     <div class="form-group mb-3">
                                         <label for="tiktok-username" class="form-label">Nombre de usuario:</label>
                                         <input type="text" id="tiktok-username" class="form-control"
@@ -272,15 +266,16 @@
                                     </div>
                                 </div>
 
-                                <div class="manual-controls input-group" id="tiktok-manual-controls" {% if not
-                                    config['platforms']['tiktok'].get('mode')=='manual' %}style="display:none" {% endif
-                                    %}>
-                                    <label for="tiktok-manual-count" class="input-group-text">Contador manual:</label>
-                                    <button type="button" class="btn btn-outline-secondary decrement-count">-</button>
-                                    <input type="number" id="tiktok-manual-count" min="0"
-                                        class="form-control text-center"
-                                        value="{{ config['platforms']['tiktok'].get('manual_count', 0) }}">
-                                    <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                                <div class="manual-controls input-group" id="tiktok-manual-controls" 
+                                    {% if not config['platforms']['tiktok'].get('mode')=='manual' %}style="display:none" {% endif %}>
+                                    <label for="tiktok-manual-count">Contador manual:</label>
+                                    <div class="input-group mb-3">
+                                        <button type="button" class="btn btn-outline-secondary decrement-count" style="margin-right: 0px;">-</button>
+                                            <input type="number" id="tiktok-manual-count" min="0"
+                                                class="form-control text-center"
+                                                value="{{ config['platforms']['tiktok'].get('manual_count', 0) }}">
+                                        <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -288,36 +283,35 @@
 
                     <!-- Zoom -->
                     <div class="col-12 col-md-6 col-lg-4 mb-3">
-                        <div class="platform-config card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm">
                             <div class="card-header">
                                 <h3 class="h5 mb-0">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="zoom-enabled" {% if
-                                            config['platforms']['zoom']['enabled'] %}checked{% endif %}>
+                                        <input class="form-check-input" type="checkbox" id="zoom-enabled" 
+                                        {% if config['platforms']['zoom']['enabled'] %}checked{% endif %}>
                                         <label class="form-check-label" for="zoom-enabled">Zoom</label>
                                     </div>
                                 </h3>
                             </div>
                             <div class="card-body">
-                                <div class="mode-selector bg-light p-2 rounded mb-3" id="zoom-mode-selector" {% if not
-                                    config['platforms']['zoom']['enabled'] %}style="display:none" {% endif %}>
+                                <div class="mode-selector bg-light p-2 rounded mb-3" id="zoom-mode-selector" 
+                                {% if not config['platforms']['zoom']['enabled'] %}style="display:none" {% endif %}>
                                     <label class="d-block mb-2">Modo de conteo:</label>
                                     <div class="btn-group" role="group">
                                         <input type="radio" class="btn-check mode-radio" name="zoom-mode"
-                                            id="zoom-mode-api" value="api" {% if
-                                            config['platforms']['zoom'].get('mode', 'api' )=='api' %}checked{% endif %}>
+                                            id="zoom-mode-api" value="api" 
+                                            {% if config['platforms']['zoom'].get('mode', 'api' )=='api' %}checked{% endif %}>
                                         <label class="btn btn-outline-primary" for="zoom-mode-api">API</label>
 
                                         <input type="radio" class="btn-check mode-radio" name="zoom-mode"
-                                            id="zoom-mode-manual" value="manual" {% if
-                                            config['platforms']['zoom'].get('mode')=='manual' %}checked{% endif %}>
+                                            id="zoom-mode-manual" value="manual" 
+                                            {% if config['platforms']['zoom'].get('mode')=='manual' %}checked{% endif %}>
                                         <label class="btn btn-outline-primary" for="zoom-mode-manual">Manual</label>
                                     </div>
                                 </div>
 
-                                <div class="platform-credentials" id="zoom-credentials" {% if
-                                    config['platforms']['zoom'].get('mode')=='manual' %}style="display:none" {% endif
-                                    %}>
+                                <div id="zoom-credentials" 
+                                    {% if config['platforms']['zoom'].get('mode')=='manual' %}style="display:none" {% endif %}>
                                     <div class="form-group mb-3">
                                         <label for="zoom-api-key" class="form-label">API Key:</label>
                                         <input type="text" id="zoom-api-key" class="form-control"
@@ -335,14 +329,16 @@
                                     </div>
                                 </div>
 
-                                <div class="manual-controls input-group" id="zoom-manual-controls" {% if not
-                                    config['platforms']['zoom'].get('mode')=='manual' %}style="display:none" {% endif
-                                    %}></div>
-                                <label for="zoom-manual-count" class="input-group-text">Contador manual:</label>
-                                <button type="button" class="btn btn-outline-secondary decrement-count">-</button>
-                                <input type="number" id="zoom-manual-count" min="0" class="form-control text-center"
-                                    value="{{ config['platforms']['zoom'].get('manual_count', 0) }}">
-                                <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                                <div class="manual-controls input-group" id="zoom-manual-controls" 
+                                    {% if not config['platforms']['zoom'].get('mode')=='manual' %}style="display:none" {% endif %}>
+                                    <label for="zoom-manual-count">Contador manual:</label>
+                                    <div class="input-group mb-3">
+                                        <button type="button" class="btn btn-outline-secondary decrement-count" style="margin-right: 0px;">-</button>
+                                        <input type="number" id="zoom-manual-count" min="0" class="form-control text-center"
+                                            value="{{ config['platforms']['zoom'].get('manual_count', 0) }}">
+                                        <button type="button" class="btn btn-outline-secondary increment-count">+</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

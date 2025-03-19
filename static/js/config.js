@@ -35,6 +35,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Función para mostrar notificación toast
+    function showToast(message, isSuccess = true) {
+        const toast = document.getElementById('toast-notification');
+        const toastMessage = document.getElementById('toast-message');
+        const toastIcon = document.getElementById('toast-icon');
+        
+        toastMessage.textContent = message;
+        
+        if (isSuccess) {
+            toastIcon.textContent = "✓";
+            toastIcon.className = "toast-icon success";
+        } else {
+            toastIcon.textContent = "✗";
+            toastIcon.className = "toast-icon error";
+        }
+        
+        toast.classList.add('show');
+        
+        // Ocultar el toast después de 3 segundos
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+    
     configForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -107,16 +131,16 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                alert('Configuración guardada correctamente');
+                showToast('Configuración guardada correctamente', true);
             } else {
-                alert('Error al guardar la configuración');
+                showToast('Error al guardar la configuración', false);
                 console.error(data.message);
                 console.error(data.traceback);
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Error al guardar la configuración');
+            showToast('Error al guardar la configuración', false);
         });
     });
     

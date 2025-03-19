@@ -5,6 +5,10 @@ class TikTokAPI:
         self.username = credentials.get('username')
         self.api_key = credentials.get('api_key')  # Para un servicio hipotético de TikTok Analytics
         
+    def update_credentials(self, credentials):
+        self.username = credentials.get('username')
+        self.api_key = credentials.get('api_key')
+        
     def get_viewer_count(self):
         if not self.username or not self.api_key:
             return 0

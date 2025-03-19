@@ -5,6 +5,10 @@ class FacebookAPI:
         self.access_token = credentials.get('access_token')
         self.live_video_id = credentials.get('live_video_id')
     
+    def update_credentials(self, credentials):
+        self.access_token = credentials.get('access_token')
+        self.live_video_id = credentials.get('live_video_id')
+    
     def get_viewer_count(self):
         if not self.access_token or not self.live_video_id:
             return 0

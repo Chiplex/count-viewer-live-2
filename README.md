@@ -68,7 +68,4 @@ La interfaz principal muestra:
 - Un contador total combinando todos los espectadores
 - Panel de control manual (si hay plataformas en modo manual)
 
-Para plataformas en modo manual, usa el panel flotante para ajustar los valores en tiempo real.
-
-## Estructura del proyecto
-
+Para plataformas en modo manual, Para plataformas en modo API, los contadores se actualizan automáticamente cada pocos segundos.

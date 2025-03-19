@@ -10,6 +10,14 @@ class TwitchAPI:
         if self.client_id and self.client_secret:
             self._get_access_token()
     
+    def update_credentials(self, credentials):
+        self.client_id = credentials.get('client_id')
+        self.client_secret = credentials.get('client_secret')
+        self.channel_name = credentials.get('channel_name')
+        
+        if self.client_id and self.client_secret:
+            self._get_access_token()
+    
     def _get_access_token(self):
         try:
             url = "https://id.twitch.tv/oauth2/token"

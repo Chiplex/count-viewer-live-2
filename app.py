@@ -69,18 +69,35 @@ def config_data():
 @app.route('/save_config', methods=['POST'])
 def save_config_route():
     global config
-    new_config = request.json
-    config = new_config
-    save_config(config)
+    try:
+        # Registrar la solicitud recibida
+        print("Datos recibidos:", request.json)
+        
+        new_config = request.json
+        config = new_config
+        save_config(config)
+        
+        # Actualizar instancias de API con nuevas credenciales
+        for platform, api in api_instances.items():
+            api.update_credentials(config['platforms'][platform].get('credentials', {}))
+        
+        # Notificar a los clientes que se actualizó la configuración
+        socketio.emit('config_updated', {})
+        
+        return jsonify({'status': 'success'})
     
-    # Actualizar instancias de API con nuevas credenciales
-    for platform, api in api_instances.items():
-        api.update_credentials(config['platforms'][platform].get('credentials', {}))
-    
-    # Notificar a los clientes que se actualizó la configuración
-    socketio.emit('config_updated', {})
-    
-    return jsonify({'status': 'success'})
+    except Exception as e:
+        # Registrar el error detallado en la consola
+        import traceback
+        print("ERROR EN SAVE_CONFIG:")
+        print(traceback.format_exc())
+        
+        # Y devolver información útil al cliente
+        return jsonify({
+            'status': 'error', 
+            'message': str(e),
+            'traceback': traceback.format_exc()
+        }), 500
 
 # Función para obtener visualizaciones en tiempo real
 def get_viewer_counts():
@@ -125,6 +142,10 @@ def background_update():
 def handle_connect():
     viewer_counts = get_viewer_counts()
     socketio.emit('update_counts', viewer_counts)
+
+@app.route('/debug')
+def debug():
+    assert False, "Debugging"
 
 if __name__ == '__main__':
     # Asegurar que el directorio de configuración existe

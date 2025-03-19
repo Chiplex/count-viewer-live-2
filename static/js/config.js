@@ -110,6 +110,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Configuración guardada correctamente');
             } else {
                 alert('Error al guardar la configuración');
+                console.error(data.message);
+                console.error(data.traceback);
             }
         })
         .catch(error => {

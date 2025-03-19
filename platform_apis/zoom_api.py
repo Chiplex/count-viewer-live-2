@@ -8,6 +8,11 @@ class ZoomAPI:
         self.api_secret = credentials.get('api_secret')
         self.meeting_id = credentials.get('meeting_id')
         
+    def update_credentials(self, credentials):
+        self.api_key = credentials.get('api_key')
+        self.api_secret = credentials.get('api_secret')
+        self.meeting_id = credentials.get('meeting_id')
+        
     def _generate_jwt_token(self):
         if not self.api_key or not self.api_secret:
             return None
